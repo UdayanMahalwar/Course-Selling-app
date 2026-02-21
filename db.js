@@ -1,17 +1,4 @@
 const mongoose = require("mongoose");
-async function connect()
-{
-    try{
-        await mongoose.connect("mongodb+srv://mahalwarudayan_db_user:12345@cluster0.dk9ilim.mongodb.net/course-selling-app")
-    }
-    catch(e)
-    {
-        console.log("error occured");
-        return ;
-    }
-}
-connect();
-console.log("connected to database");
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.ObjectId;
 const userData=new Schema({
