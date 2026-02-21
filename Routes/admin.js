@@ -3,7 +3,7 @@ const {admin_data_model} = require("../db");
 const jwt = require("jsonwebtoken");
 require('dotenv').config() 
 const {admin_auth }= require("../auth")
-const {JWT_SECRET} = process.env;
+const {JWT_ADMIN_PASS} = process.env;
 const adminRouter = Router();
 const {z} = require("zod");
 const bcrypt = require("bcrypt");
@@ -69,7 +69,7 @@ adminRouter.post("/signup",async function(req,res)
 })
 adminRouter.use(admin_auth);
 adminRouter.post("/signin" , function(req,res){ 
-   const token = jwt.sign(req.adminId, JWT_SECRET);
+   const token = jwt.sign(req.adminId, JWT_ADMIN_PASS);
 res.send({
     token:token
 })
