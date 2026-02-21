@@ -4,7 +4,9 @@ const {user_auth} = require("../auth");
 const {user_data_model} = require("../db");
 const {z, email} = require("zod");
 const bcrypt = require("bcrypt");
-const { _catch } = require("zod/v4/core");
+const {JWT_SECRET} = process.env;
+const jwt = require("jsonwebtoken");
+require('dotenv').config(); 
 let user_check = z.object({
     name:z.string(),
     email:z.string(),
@@ -57,8 +59,7 @@ userRouter.post("/signup", async function(req,res)
                     res.status(404).send("error occured");
                 }
                 
-            })
-                
+            })     
             }
             else
             {
@@ -69,7 +70,10 @@ userRouter.post("/signup", async function(req,res)
 })
 userRouter.use(user_auth);
 userRouter.post("/signin" , function(req,res){
-    res.send("signed in successFully");
+    const token = jwt.sign(req.userId , JWT_SECRET);
+    res.send({
+        token:token
+    })
 })
 userRouter.get("/course" , function(req,res)
 {

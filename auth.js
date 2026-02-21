@@ -28,6 +28,7 @@ async function admin_auth(req,res,next)
         let check = await bcrypt.compare(password , data.password)
     if(check)
        {
+        req.adminId = data._id.toString();
         return next();
        }
        else
@@ -62,6 +63,7 @@ async function user_auth(req,res,next){
        let check = await bcrypt.compare(password , data.password)
        if(check)
        {
+        req.userId = data._id.toString();
         return next();
        }
        else
