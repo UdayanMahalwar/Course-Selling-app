@@ -5,13 +5,13 @@ const userData=new Schema({
     email:{type:String , unique:true},
     password:String,
     first_name:String,
-    last_name:String
+    last_name:String,
 })
 const adminData=new Schema({
     email:{type:String , unique:true},
     password:String,
     first_name:String,
-    last_name:String
+    last_name:String,
 })
 const CourseData=new Schema({
     c_name:String,
