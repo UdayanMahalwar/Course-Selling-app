@@ -69,7 +69,7 @@ userRouter.post("/signup", async function(req,res)
 })
 userRouter.use(user_auth);
 userRouter.post("/signin" , function(req,res){
-
+    res.send("signed in successFully");
 })
 userRouter.get("/course" , function(req,res)
 {

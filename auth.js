@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const { admin_data_model , user_data_model } = require("./db");
 const user_check = z.object({
     email : z.string(),
+    password:z.string()
 })
 async function admin_auth(req,res,next)
 {
@@ -10,7 +11,8 @@ async function admin_auth(req,res,next)
     const password = req.body.password;
     try{
         user_check.parse({
-            email
+            email,
+            password  
         })
     }
     catch(e)
@@ -23,7 +25,8 @@ async function admin_auth(req,res,next)
     })
     if(data)
     {
-       if(await bcrypt.compare(password , data.password))
+        let check = await bcrypt.compare(password , data.password)
+    if(check)
        {
         return next();
        }
@@ -42,7 +45,8 @@ async function user_auth(req,res,next){
     const password = req.body.password;
     try{
         user_check.parse({
-            email
+            email,
+            password 
         })
     }
     catch(e)
@@ -55,7 +59,8 @@ async function user_auth(req,res,next){
     })
     if(data)
     {
-       if(await bcrypt.compare(password , data.password))
+       let check = await bcrypt.compare(password , data.password)
+       if(check)
        {
         return next();
        }

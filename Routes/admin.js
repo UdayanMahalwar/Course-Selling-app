@@ -1,7 +1,7 @@
 const {Router, application} = require("express");
 const {admin_data_model} = require("../db");
 const adminRouter = Router();
-adminRouter.post("/signup", function(req,res)
+adminRouter.post("/signup",async function(req,res)
 {
     let name = req.body.name;
     let email = req.body.email;
@@ -45,9 +45,7 @@ adminRouter.post("/signup", function(req,res)
                 {
                     res.status(404).send("error occured");
                 }
-                
             })
-                
             }
             else
             {
