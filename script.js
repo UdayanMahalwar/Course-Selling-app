@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require('dotenv').config({ quiet: true })
 const app = express();
 const {userRouter} = require("./Routes/user");
 const {courseRouter} = require("./Routes/course");
@@ -9,7 +10,7 @@ app.use("/course",courseRouter);
 app.use("/admin" , adminRouter);
 async function main(){
     try{
-        await mongoose.connect("mongodb+srv://mahalwarudayan_db_user:12345@cluster0.dk9ilim.mongodb.net/");
+        await mongoose.connect(process.env.db_link);
     }
     catch(e)
     {
