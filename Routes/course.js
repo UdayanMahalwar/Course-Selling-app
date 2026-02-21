@@ -1,5 +1,6 @@
 const {Router} = require("express");
 const courseRouter = Router();
+const {user_courses_data_model} = require("../db");
 courseRouter.get("", function(req,res){
 
 })
