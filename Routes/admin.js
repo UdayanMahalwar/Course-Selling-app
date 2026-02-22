@@ -89,9 +89,10 @@ adminRouter.post("/course" , async function(req,res)
         msg:"done"
     })
 })
-adminRouter.put("/course" , function(req,res)
+adminRouter.put("/course" ,async function(req,res)
 {
-    res.send(req.userId);
+   
+
 })
 adminRouter.get("/course/all" , function(req,res)
 {
