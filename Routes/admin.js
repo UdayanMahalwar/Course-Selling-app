@@ -7,6 +7,7 @@ const {JWT_ADMIN_PASS} = process.env;
 const adminRouter = Router();
 const {z} = require("zod");
 const bcrypt = require("bcrypt");
+const {admin_middleware} = require("./middleware/admin");
 let user_check = z.object({
     name:z.string(),
     email:z.string(),
@@ -67,25 +68,24 @@ adminRouter.post("/signup",async function(req,res)
             
         })
 })
-adminRouter.use(admin_auth);
-adminRouter.post("/signin" , function(req,res){ 
+adminRouter.post("/signin" ,admin_auth, function(req,res){ 
    const token = jwt.sign(req.adminId, JWT_ADMIN_PASS);
 res.send({
     token:token
 })
 })
-
+ adminRouter.use(admin_middleware);
 adminRouter.post("/course" , function(req,res)
 {
-
+    res.send(req.userId)
 })
 adminRouter.put("/course" , function(req,res)
 {
-
+    res.send(req.userId);
 })
 adminRouter.get("/course/all" , function(req,res)
 {
-
+    res.send({output : req.userId});
 })
 module.exports={
     adminRouter

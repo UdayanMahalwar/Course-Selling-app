@@ -6,6 +6,7 @@ const {z, email} = require("zod");
 const bcrypt = require("bcrypt");
 const {JWT_USER_PASS} = process.env;
 const jwt = require("jsonwebtoken");
+const {user_middleware} = require("./middleware/user");
 require('dotenv').config(); 
 let user_check = z.object({
     name:z.string(),
@@ -68,15 +69,17 @@ userRouter.post("/signup", async function(req,res)
             
         })
 })
+
 userRouter.post("/signin" ,user_auth, function(req,res){
     const token = jwt.sign(req.userId , JWT_USER_PASS);
     res.send({
         token:token
     })
 })
+userRouter.use(user_middleware)
 userRouter.get("/course" , function(req,res)
 {
-
+    res.send("done");
 })
 module.exports={
     userRouter
