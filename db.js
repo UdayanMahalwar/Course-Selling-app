@@ -16,7 +16,7 @@ const adminData=new Schema({
 const CourseData=new Schema({
     c_name:String,
     price:Number,
-    description:Number,
+    description:String,
     img_url:String,
     creater_id:ObjectId
 })

@@ -1,5 +1,5 @@
 const {Router, application} = require("express");
-const {admin_data_model} = require("../db");
+const {admin_data_model , course_data_model} = require("../db");
 const jwt = require("jsonwebtoken");
 require('dotenv').config() 
 const {admin_auth }= require("../auth")
@@ -75,9 +75,19 @@ res.send({
 })
 })
  adminRouter.use(admin_middleware);
-adminRouter.post("/course" , function(req,res)
+adminRouter.post("/course" , async function(req,res)
 {
-    res.send(req.userId)
+    const uid = req.userId
+    const { c_name,price,description,img_url} = req.body;
+    await course_data_model.create({
+        c_name,
+        price,
+        description,img_url,
+        creater_id:uid
+    })
+    res.send({
+        msg:"done"
+    })
 })
 adminRouter.put("/course" , function(req,res)
 {
