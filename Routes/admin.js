@@ -97,9 +97,11 @@ adminRouter.put("/course" ,async function(req,res)
     creater_id:userId } , {c_name:name , description , price , img_url })
     res.send("done")
 })
-adminRouter.get("/course/all" , function(req,res)
+adminRouter.get("/course/all" , async function(req,res)
 {
-    res.send({output : req.userId});
+    const userId = req.userId;
+    const courses = await course_data_model.find({creater_id:userId});
+    return res.send(courses);
 })
 module.exports={
     adminRouter
