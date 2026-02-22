@@ -1,6 +1,7 @@
 const {Router, application} = require("express");
 const {admin_data_model , course_data_model} = require("../db");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose")
 require('dotenv').config() 
 const {admin_auth }= require("../auth")
 const {JWT_ADMIN_PASS} = process.env;
@@ -9,7 +10,6 @@ const {z} = require("zod");
 const bcrypt = require("bcrypt");
 const {admin_middleware} = require("./middleware/admin");
 let user_check = z.object({
-    name:z.string(),
     email:z.string(),
     password:z.string(),
     first_name:z.string(),
@@ -17,7 +17,6 @@ let user_check = z.object({
 })
 adminRouter.post("/signup",async function(req,res)
 {
-    let name = req.body.name;
     let email = req.body.email;
     let password = req.body.password;
     let first_name= req.body.first_name;
@@ -27,7 +26,6 @@ adminRouter.post("/signup",async function(req,res)
     })
     try{
         user_check.parse({
-            name:name,
             email:email, 
             password:password,
             first_name:first_name,
@@ -51,7 +49,7 @@ adminRouter.post("/signup",async function(req,res)
                 if(!err)
                 {
                     await admin_data_model.insertMany({
-                        name,email,password:hash,first_name,last_name
+                        email,password:hash,first_name,last_name
                     })
                     res.send("signed up successfully")
                 }
@@ -91,8 +89,13 @@ adminRouter.post("/course" , async function(req,res)
 })
 adminRouter.put("/course" ,async function(req,res)
 {
-   
-
+   let courseId = req.body.courseId;
+   let {name , description , price , img_url} = req.body;
+   let userId = req.userId;
+   await course_data_model.updateOne({
+    _id:courseId ,
+    creater_id:userId } , {c_name:name , description , price , img_url })
+    res.send("done")
 })
 adminRouter.get("/course/all" , function(req,res)
 {
