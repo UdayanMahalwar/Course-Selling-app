@@ -1,7 +1,7 @@
 const {Router, application} = require("express");
 const userRouter = Router();
 const {user_auth} = require("../auth");
-const {user_data_model} = require("../db");
+const {user_data_model, user_courses_data_model} = require("../db");
 const {z, email} = require("zod");
 const bcrypt = require("bcrypt");
 const {JWT_USER_PASS} = process.env;
@@ -74,9 +74,11 @@ userRouter.post("/signin" ,user_auth, function(req,res){
     })
 })
 userRouter.use(user_middleware)
-userRouter.get("/course" , function(req,res)
+userRouter.get("/courses" , function(req,res)
 {
-    res.send("done");
+    let userId =req.userId;
+    const courses = user_courses_data_model.find({user_id:userId});
+    return res.send(courses)
 })
 module.exports={
     userRouter

@@ -1,13 +1,15 @@
 const {Router} = require("express");
 const courseRouter = Router();
 const {user_courses_data_model} = require("../db");
-courseRouter.get("", function(req,res){
-
-})
-courseRouter.post("/purchase" , function(req,res)
+courseRouter.post("/purchase" ,async function(req,res)
 {
+    const userId = req.body.userId;
+    const course_id = req.body.course_id   ;
+    await user_courses_data_model.create({
+        userId , course_id
+    })
     res.send({
-        result:"welcome"
+        result:"Thankypu for purchasing the course"
     })
 })
 module.exports={
